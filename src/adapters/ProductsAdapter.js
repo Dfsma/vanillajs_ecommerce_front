@@ -6,7 +6,7 @@ class ProductsAdapter {
   getProducts() {
     return fetch(this.baseURL).then(response => {
         if(!response.ok){
-            throw Error("Mal Ahi");
+            throw Error("Error");
         }
         return response.json();
         

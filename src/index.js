@@ -36,7 +36,7 @@ function getProducts() {
           
           return `
             <div class="col-md-4 animate__animated animate__backInDown">
-              <div class="card mb-4 box-shadow" style="width: 20rem;">
+              <div class="card mb-4 box-shadow">
                 <img class="card-img-top img-fluid" src="${product.url_image}" alt="${product.name}" style="width:100%; height:30%;">
                 <div class="card-body">
                   <h4><b>${product.name}</b></h4>

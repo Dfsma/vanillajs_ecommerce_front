@@ -20,12 +20,13 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
   />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BSALE ECOMMERCE</title>
 </head>
 
 <body>
 
-  <div class="navbar navbar-dark bg-dark box-shadow  ">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark box-shadow  ">
     <div class="container d-flex justify-content-between">
       <a href="#" class="navbar-brand d-flex align-items-center">
         <svg background-color="red" height="30" viewBox="0 0 340 284" width="30" xmlns="http://www.w3.org/2000/svg">
@@ -36,12 +37,9 @@
         </svg>
         <strong style="padding-left: 20px;">Rails + Vanilla JS</strong>
       </a>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
-      </form>
+      
     </div>
-  </div>
+  </nav>
   </header>
 
   <main role="main">
@@ -55,13 +53,18 @@
 
     <div class="album py-5 bg-light">
       <div class="container">
-
+        
         <div class="form-group pb-3">
           <h4>Filtra por categoria:</h4>
             
           <select id="categoryDropDown" class="form-control"  data-role="select-dropdown">
             <option value="" disabled selected>Seleccione una categoria...</option>
           </select>
+
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Buscar por nombre..." aria-label="Search">
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
+          </form>
         </div>
         
 

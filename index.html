@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
-<head>
+<head >
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="">
   <link rel="stylesheet" type="text/css" href="styles/style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -17,13 +19,13 @@
     crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BSALE ECOMMERCE</title>
+ 
+  <title>Rails + Vanilla JS</title>
 </head>
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark box-shadow  ">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark box-shadow  fixed-top">
     <div class="container d-flex justify-content-between">
       <a href="#" class="navbar-brand d-flex align-items-center">
         <svg background-color="red" height="30" viewBox="0 0 340 284" width="30" xmlns="http://www.w3.org/2000/svg">
@@ -68,8 +70,6 @@
           </form>
         </div>
 
-        <!-- (C) CURRENT CART -->
-        <div id="cart-items"></div>
        
         <div id="app" class="row">
           <div id="loading"></div>
@@ -116,7 +116,8 @@
   </div>
 
   <script type="application/javascript" src="src/index.js" charset="utf-8"></script>
-
+  <script type="application/javascript" src="src/cart.js" charset="utf-8"></script>
+  
 </body>
 
 </html>

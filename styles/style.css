@@ -94,3 +94,7 @@ svg:hover{
 .sticky + .content {
   padding-top: 60px;
 }
+
+.jumbotron {
+  margin-top: 100px;
+}

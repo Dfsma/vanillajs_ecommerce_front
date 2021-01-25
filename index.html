@@ -16,10 +16,7 @@
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BSALE ECOMMERCE</title>
 </head>
@@ -37,7 +34,10 @@
         </svg>
         <strong style="padding-left: 20px;">Rails + Vanilla JS</strong>
       </a>
-      
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart">Carrito (<span class="total-count"></span>)</button><button class="clear-cart btn btn-danger">Limpiar Carrito</button></div>
+    </div>
     </div>
   </nav>
   </header>
@@ -53,24 +53,27 @@
 
     <div class="album py-5 bg-light">
       <div class="container">
-        
+
         <div class="form-group pb-3">
           <h4>Filtra por categoria:</h4>
-            
-          <select id="categoryDropDown" class="form-control"  data-role="select-dropdown">
+
+          <select id="categoryDropDown" class="form-control" data-role="select-dropdown">
             <option value="" disabled selected>Seleccione una categoria...</option>
           </select>
 
-          <form class="form-inline my-2 my-lg-0">
+          <form class="form-inline mt-4 ">
             <input class="form-control mr-sm-2" type="search" placeholder="Buscar por nombre..." aria-label="Search">
             <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Buscar</button>
           </form>
         </div>
-        
 
+        <!-- (C) CURRENT CART -->
+        <div id="cart-items"></div>
+        <section class="section">
         <div id="app" class="row">
           <div id="loading"></div>
         </div>
+        </section>  
       </div>
     </div>
 
@@ -84,6 +87,31 @@
       <p>Made by <a href="https://github.com/Dfsma">Diego</a> </p>
     </div>
   </footer>
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="show-cart table">
+
+          </table>
+          <div>Total price: $<span class="total-cart"></span></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Order now</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script type="application/javascript" src="src/index.js" charset="utf-8"></script>

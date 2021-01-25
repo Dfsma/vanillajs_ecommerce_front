@@ -35,7 +35,7 @@ function getProducts() {
         .map((product) => {
           
           return `
-            <div class="col-md-4 animate__animated animate__backInDown">
+            <div class="col-md-4 animate__animated animate__backInDown animate__slow">
               <div class="card mb-4 box-shadow">
                 <img class="card-img-top img-fluid" src="${product.url_image}" alt="${product.name}" style="width:100%; height:30%;">
                 <div class="card-body">
@@ -74,13 +74,9 @@ function getCategories() {
     })
     .then((data) => {
       const html = data
-      
         .map((category) => {
-          
           return `
-           
             <option id="category" value="${category.id}">${category.name}</option>
-            
           `;
         })
         .join("");
@@ -117,7 +113,7 @@ function getProductsByCategory(selectedOption) {
         .map((product) => {
           
           return `
-            <div class="col-md-4 animate__animated animate__backInDown">
+            <div class="col-md-4 animate__animated animate__backInDown  animate__slow">
               <div class="card mb-4 box-shadow">
                 <img class="card-img-top img-fluid" src="${product.url_image}" alt="${product.name}" style="width:100%; height:30%;">
                 <div class="card-body">
@@ -156,107 +152,107 @@ const shoppingCart = (function() {
 
   
 
-// Save cart
-function saveCart() {
-  sessionStorage.setItem('shoppingCart', JSON.stringify(cart));
-}
-function loadCart() {
-  cart = JSON.parse(sessionStorage.getItem('shoppingCart'));
-}
-if (sessionStorage.getItem("shoppingCart") != null) {
-  loadCart();
-}
-
-const obj = {};
-
-obj.addItemToCart = function(name, price, count){
-  for(let item in cart) {
-    if(cart[item].name === name) {
-      cart[item].count ++;
-      saveCart();
-      return;
-    }
+  // Save cart
+  function saveCart() {
+    sessionStorage.setItem('shoppingCart', JSON.stringify(cart));
   }
-  let item = new Item(name, price, count);
-  cart.push(item);
-
-  saveCart();
-}
-
-
-
-// Set count from item
-obj.setCountForItem = function(name, count) {
-  for(var i in cart) {
-    if (cart[i].name === name) {
-      cart[i].count = count;
-      break;
-    }
+  function loadCart() {
+    cart = JSON.parse(sessionStorage.getItem('shoppingCart'));
   }
-};
+  if (sessionStorage.getItem("shoppingCart") != null) {
+    loadCart();
+  }
 
-// Remove item from cart
-obj.removeItemFromCart = function(name) {
-  for(var item in cart) {
-    if(cart[item].name === name) {
-      cart[item].count --;
-      if(cart[item].count === 0) {
-        cart.splice(item, 1);
+  const obj = {};
+
+  obj.addItemToCart = function(name, price, count){
+    for(let item in cart) {
+      if(cart[item].name === name) {
+        cart[item].count ++;
+        saveCart();
+        return;
       }
-      break;
     }
-}
-saveCart();
-}
+    let item = new Item(name, price, count);
+    cart.push(item);
 
-// Remove all items from cart
-obj.removeItemFromCartAll = function(name) {
-  for(var item in cart) {
-    if(cart[item].name === name) {
-      cart.splice(item, 1);
-      break;
+    saveCart();
+  }
+
+
+
+  // Set count from item
+  obj.setCountForItem = function(name, count) {
+    for(var i in cart) {
+      if (cart[i].name === name) {
+        cart[i].count = count;
+        break;
+      }
     }
+  };
+
+  // Remove item from cart
+  obj.removeItemFromCart = function(name) {
+    for(var item in cart) {
+      if(cart[item].name === name) {
+        cart[item].count --;
+        if(cart[item].count === 0) {
+          cart.splice(item, 1);
+        }
+        break;
+      }
   }
   saveCart();
-}
-
-// Clear cart
-obj.clearCart = function() {
-  cart = [];
-  saveCart();
-}
-// Count cart 
-obj.totalCount = function() {
-  var totalCount = 0;
-  for(var item in cart) {
-    totalCount += cart[item].count;
   }
-  return totalCount;
-}
-// Total cart
-obj.totalCart = function() {
-  var totalCart = 0;
-  for(var item in cart) {
-    totalCart += cart[item].price * cart[item].count;
-  }
-  return Number(totalCart.toFixed(2));
-}
-// List cart
-obj.listCart = function() {
-  var cartCopy = [];
-  for(i in cart) {
-    item = cart[i];
-    itemCopy = {};
-    for(p in item) {
-      itemCopy[p] = item[p];
 
+  // Remove all items from cart
+  obj.removeItemFromCartAll = function(name) {
+    for(var item in cart) {
+      if(cart[item].name === name) {
+        cart.splice(item, 1);
+        break;
+      }
     }
-    itemCopy.total = Number(item.price * item.count).toFixed(2);
-    cartCopy.push(itemCopy)
+    saveCart();
   }
-  return cartCopy;
-}
-return obj;
+
+  // Clear cart
+  obj.clearCart = function() {
+    cart = [];
+    saveCart();
+  }
+  // Count cart 
+  obj.totalCount = function() {
+    var totalCount = 0;
+    for(var item in cart) {
+      totalCount += cart[item].count;
+    }
+    return totalCount;
+  }
+  // Total cart
+  obj.totalCart = function() {
+    var totalCart = 0;
+    for(var item in cart) {
+      totalCart += cart[item].price * cart[item].count;
+    }
+    return Number(totalCart.toFixed(2));
+  }
+  // List cart
+  obj.listCart = function() {
+    var cartCopy = [];
+    for(i in cart) {
+      item = cart[i];
+      itemCopy = {};
+      for(p in item) {
+        itemCopy[p] = item[p];
+
+      }
+      itemCopy.total = Number(item.price * item.count).toFixed(2);
+      cartCopy.push(itemCopy)
+    }
+    return cartCopy;
+  }
+  return obj;
 })();
 
 $('.add-to-cart').click(function(event) {

@@ -1,219 +1,136 @@
-// ************************************************
-// Shopping Cart API
-// ************************************************
+//Variables para obtener los id.
+const carrito = document.getElementById('carrito');
+const productos = document.getElementById('app');
+const listaProductos = document.querySelector('#lista-carrito tbody');
+const vaciarCarritoBtn = document.getElementById('vaciar-carrito');
 
-var shoppingCart = (function() {
-  
-    // =============================
-    // Private methods and propeties
-    // =============================
-    cart = [];
-    
-    // Constructor
-    function Item(name, price, count) {
-      this.name = name;
-      this.price = price;
-      this.count = count;
-    }
-    
-    // Save cart
-    function saveCart() {
-      sessionStorage.setItem('shoppingCart', JSON.stringify(cart));
-    }
-    
-      // Load cart
-    function loadCart() {
-      cart = JSON.parse(sessionStorage.getItem('shoppingCart'));
-      
-    }
-    if (sessionStorage.getItem("shoppingCart") != null) {
-      loadCart();
-    }
-    
-  
-    // =============================
-    // Public methods and propeties
-    // =============================
-    var obj = {};
-    
-    // Add to cart
-    obj.addItemToCart = function(name, price, count) {
-     
-      for(var item in cart) {
-        if(cart[item].name === name) {
-          cart[item].count ++;
-          saveCart();
-          return;
-        }
-      }
-      var item = new Item(name, price, count);
-      cart.push(item);
-      saveCart();
-    }
-    // Set count from item
-    obj.setCountForItem = function(name, count) {
-      for(var i in cart) {
-        if (cart[i].name === name) {
-          cart[i].count = count;
-          break;
-        }
-      }
-    };
-    // Remove item from cart
-    obj.removeItemFromCart = function(name) {
-        for(var item in cart) {
-          if(cart[item].name === name) {
-            cart[item].count --;
-            if(cart[item].count === 0) {
-              cart.splice(item, 1);
-            }
-            break;
-          }
-      }
-      saveCart();
-    }
-  
-    // Remove all items from cart
-    obj.removeItemFromCartAll = function(name) {
-      for(var item in cart) {
-        if(cart[item].name === name) {
-          cart.splice(item, 1);
-          break;
-        }
-      }
-      saveCart();
-    }
-  
-    // Clear cart
-    obj.clearCart = function() {
-      cart = [];
-      saveCart();
-    }
-  
-    // Count cart 
-    obj.totalCount = function() {
-      var totalCount = 0;
-      for(var item in cart) {
-        totalCount += cart[item].count;
-      }
-      return totalCount;
-    }
-  
-    // Total cart
-    obj.totalCart = function() {
-      var totalCart = 0;
-      for(var item in cart) {
-        totalCart += cart[item].price * cart[item].count;
-      }
-      return Number(totalCart.toFixed(2));
-    }
-  
-    // List cart
-    obj.listCart = function() {
-      var cartCopy = [];
-      for(i in cart) {
-        item = cart[i];
-        itemCopy = {};
-        for(p in item) {
-          itemCopy[p] = item[p];
-  
-        }
-        itemCopy.total = Number(item.price * item.count).toFixed(2);
-        cartCopy.push(itemCopy)
-      }
-      return cartCopy;
-    }
-  
-    
-  
-    // cart : Array
-    // Item : Object/Class
-    // addItemToCart : Function
-    // removeItemFromCart : Function
-    // removeItemFromCartAll : Function
-    // clearCart : Function
-    // countCart : Function
-    // totalCart : Function
-    // listCart : Function
-    // saveCart : Function
-    // loadCart : Function
-    return obj;
-  })();
-  
-  
-  // *****************************************
-  // Triggers / Events
-  // ***************************************** 
-  // Add item
-  $('.add-to-cart').click(function(event) {
-    
-    event.preventDefault();
-   
-    var name = $(this).data('name');
-    var price = Number($(this).data('price'));
-    shoppingCart.addItemToCart(name, price, 1);
-  
-    displayCart();
-  });
-  
-  // Clear items
-  $('.clear-cart').click(function() {
-    shoppingCart.clearCart();
-    displayCart();
-  });
-  
-  
-  function displayCart() {
-    var cartArray = shoppingCart.listCart();
-  
-   
-    var output = "";
-    for(var i in cartArray) {
-      output += "<tr>"
-        + "<td>" + cartArray[i].name + "</td>" 
-        + "<td>(" + cartArray[i].price + ")</td>"
-        + "<td><div class='input-group'><button class='minus-item input-group-addon btn btn-primary' data-name=" + cartArray[i].name + ">-</button>"
-        + "<input type='number' class='item-count form-control' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
-        + "<button class='plus-item btn btn-primary input-group-addon' data-name=" + cartArray[i].name + ">+</button></div></td>"
-        + "<td><button class='delete-item btn btn-danger' data-name=" + cartArray[i].name + ">X</button></td>"
-        + " = " 
-        + "<td>" + cartArray[i].total + "</td>" 
-        +  "</tr>";
-    }
-    $('.show-cart').html(output);
-    $('.total-cart').html(shoppingCart.totalCart());
-    $('.total-count').html(shoppingCart.totalCount());
+// Listeners
+cargarEventListeners();
+function cargarEventListeners(){
+  // Dispara cuando se presiona "Agregar Carrito"
+  productos.addEventListener('click', comprarProducto);
+  // Cuando se elimina un producto del carrito
+  carrito.addEventListener('click', eliminarProducto);
+  // Al Vaciar el carrito
+  vaciarCarritoBtn.addEventListener('click', vaciarCarrito);
+  // Al cargar el documento, mostrar LocalStorage
+  document.addEventListener('DOMContentLoaded', leerLocalStorage);
+}
+// Funciones
+// Función que añade el producto al carrito
+function comprarProducto(e) {
+  e.preventDefault();
+  // Delegation para agregar-carrito
+  if(e.target.classList.contains('agregar-carrito')) {
+    const producto = e.target.parentElement.parentElement;
+    // Enviamos el producto seleccionado para tomar sus datos
+    leerDatosProducto(producto);
   }
+}
+
+// Lee los datos del producto
+function leerDatosProducto(producto) {
+  const infoProducto = {
+    nombre: producto.querySelector('.card-title').textContent,
+    precio: producto.querySelector('.card-text').textContent,
+    id: producto.querySelector('a').getAttribute('data-id')
+  }
+  insertarCarrito(infoProducto);
+}
+// Muestra el producto seleccionado en el Carrito
+function insertarCarrito(producto) {
+  const row = document.createElement('tr');
+  row.innerHTML = `
+  <td>${producto.nombre}</td>
+  <td>${producto.precio}</td>
+  <td>
+  <a href="#" class="borrar-producto" data-id="${producto.id}">X</a>
+  </td>
+  `;
+  listaProductos.appendChild(row);
+  guardarProductoLocalStorage(producto);
+}
+
+// Elimina el producto del carrito en el DOM
+function eliminarProducto(e) {
+  e.preventDefault();
+  let producto,
+      productoId;
+  if(e.target.classList.contains('borrar-producto') ) {
+    e.target.parentElement.parentElement.remove();
+    producto = e.target.parentElement.parentElement;
+    productoId = producto.querySelector('a').getAttribute('data-id');
+  }
+  eliminarProductoLocalStorage(productoId);
+}
+// Elimina los productos del carrito en el DOM
+function vaciarCarrito() {
   
-  // Delete item button
+  while(listaProductos.firstChild) {
+    listaProductos.removeChild(listaProductos.firstChild);
+  }
+
+  // Vaciar Local Storage
+  vaciarLocalStorage();
+  return false;
+}
+// Almacena productos en el carrito a Local Storage
+function guardarProductoLocalStorage(producto) {
+  let productos;
+  // Toma el valor de un arreglo con datos de LS o vacio
+  productos = obtenerProductosLocalStorage();
+  // el producto seleccionado se agrega al arreglo
+  productos.push(producto);
+  localStorage.setItem('productos', JSON.stringify(productos) );
+}
+
+// Comprueba que haya elementos en Local Storage
+function obtenerProductosLocalStorage() {
+  let productosLS;
+  // comprobamos si hay algo en localStorage
+  if(localStorage.getItem('productos') === null) {
+    productosLS = [];
+  } else {
+    productosLS = JSON.parse( localStorage.getItem('productos') );
+  }
+  return productosLS;
+}
+
+// Imprime los productos de Local Storage en el carrito
+function leerLocalStorage() {
+  let productosLS;
+  productosLS = obtenerProductosLocalStorage();
+  productosLS.forEach(function(producto){
+  // construir el template
+  const row = document.createElement('tr');
+  row.innerHTML = `
   
-  $('.show-cart').on("click", ".delete-item", function(event) {
-    var name = $(this).data('name')
-    shoppingCart.removeItemFromCartAll(name);
-    displayCart();
-  })
-  
-  
-  // -1
-  $('.show-cart').on("click", ".minus-item", function(event) {
-    var name = $(this).data('name')
-    shoppingCart.removeItemFromCart(name);
-    displayCart();
-  })
-  // +1
-  $('.show-cart').on("click", ".plus-item", function(event) {
-    var name = $(this).data('name')
-    shoppingCart.addItemToCart(name);
-    displayCart();
-  })
-  
-  // Item count input
-  $('.show-cart').on("change", ".item-count", function(event) {
-     var name = $(this).data('name');
-     var count = Number($(this).val());
-    shoppingCart.setCountForItem(name, count);
-    displayCart();
+  <td>${producto.nombre}</td>
+  <td>${producto.precio}</td>
+  <td>
+  <a href="#" class="borrar-producto" data-id="${producto.id}">X</a>
+  </td>
+  `;
+  listaProductos.appendChild(row);
   });
+}
 
+// Elimina el producto por el ID en Local Storage
+function eliminarProductoLocalStorage(producto) {
+  let productosLS;
+  // Obtenemos el arreglo de productos
+  productosLS = obtenerProductosLocalStorage();
+  // Iteramos comparando el ID del producto borrado con los del LS
+  productosLS.forEach(function(productoLS, index) {
+    if(productoLS.id === producto) {
+      productosLS.splice(index, 1);
+    }
+  });
+  // Añadimos el arreglo actual a storage
+  localStorage.setItem('productos', JSON.stringify(productosLS) );
+}
 
-  displayCart();
+// Elimina todos los productos de Local Storage
+function vaciarLocalStorage() {
+  localStorage.clear();
+}

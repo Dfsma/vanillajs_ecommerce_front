@@ -7,6 +7,9 @@ const loader = document.querySelector("#loading");
 
 var loadingDiv = document.getElementById('loading');
 
+
+
+
 function showSpinner() {
   loadingDiv.style.visibility = 'visible';
 }
@@ -16,6 +19,7 @@ function hideSpinner() {
 }
 
 function getProducts() {
+  
   showSpinner();
   return fetch(baseURL)
     
@@ -44,7 +48,7 @@ function getProducts() {
                   <p  class="card-text">Precio: $ ${product.price}</p>
                   <p>Descuento: ${product.discount} %</p>
                   <p class="text-info">Categoria: ${product.category.name}</p>
-                  <a href="#" data-name="${product.name}" data-price="${product.price}" class="add-to-cart btn btn-primary">Add to cart</a>
+                  <a href="#" class="agregar-carrito btn btn-info" data-id="${product.id}"><i class="fa fa-cart-plus"></i>&nbsp;  AGREGAR AL CARRITO</a>
                 </div>
               </div>
             </div>
@@ -141,6 +145,12 @@ function getProductsByCategory(selectedOption) {
 function clearProducts() {
   document.querySelector("#app").innerHTML = "";
 }
+
+
+
+
+
+
 
 
 

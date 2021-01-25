@@ -39,7 +39,7 @@
       <div class="row">
         <div class="col">
           <button type="button" class="btn btn btn-outline-info mb-2 mt-1" data-toggle="modal" data-target="#cart">Carrito (<span class="total-count"></span>)</button>
-          <button class="clear-cart btn btn-outline-danger ml-2 mb-2 mt-1">Limpiar Carrito</button></div>
+          <button id="vaciar-carrito" class="clear-cart btn btn-outline-danger ml-2 mb-2 mt-1">Limpiar Carrito</button></div>
     </div>
     </div>
   </nav>
@@ -86,9 +86,9 @@
   <footer class="text-muted">
     <div class="container">
       <p class="float-right">
-        <a href="#">Back to top</a>
+        <a href="#">Ir al Principio</a>
       </p>
-      <p>Made by <a href="https://github.com/Dfsma">Diego</a> </p>
+      <p>Más: <a href="https://github.com/Dfsma">Github</a> </p>
     </div>
   </footer>
   </div>
@@ -99,20 +99,27 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Carrito</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          <table class="show-cart table">
-
+        <div id="carrito" class="modal-body">
+          <table id="lista-carrito" class="show-cart table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
           </table>
-          <div>Total price: $<span class="total-cart"></span></div>
+          <div>Precio Total: $<span class="total-cart"></span></div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Order now</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary">Finalizar Compra</button>
         </div>
       </div>
     </div>

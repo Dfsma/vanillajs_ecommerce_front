@@ -4,6 +4,9 @@ const productos = document.getElementById('app');
 const listaProductos = document.querySelector('#lista-carrito tbody');
 const vaciarCarritoBtn = document.getElementById('vaciar-carrito');
 
+
+
+
 // Listeners
 cargarEventListeners();
 function cargarEventListeners(){
@@ -45,8 +48,26 @@ function totalCount() {
       totalCount = totalCount + 1;
   });
 
-  return totalCount
+  return totalCount;
 }
+
+function totalPrice(){
+ 
+  let totalPrice = 0;
+  productosLS = obtenerProductosLocalStorage();
+  productCount = productosLS.length;
+ 
+  productosLS.forEach(function(producto){
+      totalPrice = producto.precio * productCount;
+  });
+
+  return totalPrice;
+  
+  
+  
+}$('.total-cart').html(totalPrice());
+
+
 
 // Muestra el producto seleccionado en el Carrito
 function insertarCarrito(producto) {
@@ -62,6 +83,8 @@ function insertarCarrito(producto) {
   listaProductos.appendChild(row);
   guardarProductoLocalStorage(producto);
   $('.total-count').html(totalCount());
+  $('.total-cart').html(totalPrice());
+  
   
 }
 $('.total-count').html(totalCount());
@@ -89,6 +112,7 @@ function vaciarCarrito() {
   
   vaciarLocalStorage();
   $('.total-count').html(totalCount());
+  $('.total-cart').html(totalPrice());
   return false;
 }
 // Almacena productos en el carrito a Local Storage
@@ -155,6 +179,7 @@ function eliminarProductoLocalStorage(producto) {
   });
   // Añadimos el arreglo actual a storage
   localStorage.setItem('productos', JSON.stringify(productosLS) );
+  $('.total-cart').html(totalPrice());
 }
 
 // Elimina todos los productos de Local Storage

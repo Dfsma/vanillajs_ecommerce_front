@@ -45,7 +45,7 @@ function getProducts() {
                 <img class="card-img-top img-fluid" src="${product.url_image}" alt="${product.name}" style="width:100%; height:30%;">
                 <div class="card-body">
                   <h4  class="card-title"><b>${product.name}</b></h4>
-                  <p  class="card-text">Precio: $ ${product.price}</p>
+                  <p  class="card-text">${product.price}</p>
                   <p>Descuento: ${product.discount} %</p>
                   <p class="text-info">Categoria: ${product.category.name}</p>
                   <a href="#" class="agregar-carrito btn btn-info" data-id="${product.id}"><i class="fa fa-cart-plus"></i>&nbsp;  AGREGAR AL CARRITO</a>
@@ -123,7 +123,7 @@ function getProductsByCategory(selectedOption) {
               <img class="card-img-top img-fluid" src="${product.url_image}" alt="${product.name}" style="width:100%; height:30%;">
               <div class="card-body">
                 <h4  class="card-title"><b>${product.name}</b></h4>
-                <p  class="card-text">Precio: $ ${product.price}</p>
+                <p  id="card-price" class="card-text">${product.price}</p>
                 <p>Descuento: ${product.discount} %</p>
                 <p class="text-info">Categoria: ${product.category.name}</p>
                 <a href="#" class="agregar-carrito btn btn-info" data-id="${product.id}"><i class="fa fa-cart-plus"></i>&nbsp;  AGREGAR AL CARRITO</a>

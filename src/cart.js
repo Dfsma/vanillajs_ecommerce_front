@@ -37,8 +37,20 @@ function leerDatosProducto(producto) {
   }
   insertarCarrito(infoProducto);
 }
+
+function totalCount() {
+  let totalCount = 0;
+  productosLS = obtenerProductosLocalStorage();
+  productosLS.forEach(function(producto){
+      totalCount = totalCount + 1;
+  });
+
+  return totalCount
+}
+
 // Muestra el producto seleccionado en el Carrito
 function insertarCarrito(producto) {
+  
   const row = document.createElement('tr');
   row.innerHTML = `
   <td>${producto.nombre}</td>
@@ -49,8 +61,10 @@ function insertarCarrito(producto) {
   `;
   listaProductos.appendChild(row);
   guardarProductoLocalStorage(producto);
+  $('.total-count').html(totalCount());
+  
 }
-
+$('.total-count').html(totalCount());
 // Elimina el producto del carrito en el DOM
 function eliminarProducto(e) {
   e.preventDefault();
@@ -62,6 +76,7 @@ function eliminarProducto(e) {
     productoId = producto.querySelector('a').getAttribute('data-id');
   }
   eliminarProductoLocalStorage(productoId);
+  $('.total-count').html(totalCount());
 }
 // Elimina los productos del carrito en el DOM
 function vaciarCarrito() {
@@ -71,7 +86,9 @@ function vaciarCarrito() {
   }
 
   // Vaciar Local Storage
+  
   vaciarLocalStorage();
+  $('.total-count').html(totalCount());
   return false;
 }
 // Almacena productos en el carrito a Local Storage
@@ -96,6 +113,10 @@ function obtenerProductosLocalStorage() {
   return productosLS;
 }
 
+
+
+
+
 // Imprime los productos de Local Storage en el carrito
 function leerLocalStorage() {
   let productosLS;
@@ -104,12 +125,18 @@ function leerLocalStorage() {
   // construir el template
   const row = document.createElement('tr');
   row.innerHTML = `
-  
-  <td>${producto.nombre}</td>
-  <td>${producto.precio}</td>
-  <td>
-  <a href="#" class="borrar-producto" data-id="${producto.id}">X</a>
-  </td>
+      <tr>
+      <td>${producto.nombre}</td>
+      <td>${producto.precio}</td>
+      <td><div class='input-group'><button class='minus-item input-group-addon btn btn-primary' data-name="${producto.nombre}">-</button>
+      <input type='number' class='item-count form-control' data-name="${producto.name}" value="${producto.count}">
+      <button class='plus-item btn btn-primary input-group-addon' data-name="${producto.name}">+</button></div></td>
+      <td> ${producto.total} </td>
+      <td>
+      <a href="#" class="borrar-producto" data-id="${producto.id}">X</a>
+      </td>
+      </tr>
+      
   `;
   listaProductos.appendChild(row);
   });

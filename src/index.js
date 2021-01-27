@@ -42,14 +42,14 @@ function getProducts() {
             clearProducts();
             
             return `
-            <div class="col-md-3 col-sm-6 animate__animated animate__backInDown animate__slow">
+            <div class="col-md-4 animate__animated animate__backInDown animate__slow">
               <div class="card mb-4 box-shadow">
                 <img class="card-img-top img-fluid" src="${product.url_image}" alt="${product.name}" style="width:100%; height:30%;">
                 <div class="card-body">
                   <h4  class="card-title"><b>${product.name}</b></h4>
                   <p  class="card-text">${product.price}</p>
                   <p>Descuento: ${product.discount} %</p>
-                  <p class="text-info">Categoria: ${product.category.name}</p>
+                  <p class="text-info">Categoria:${product.category.name}</p>
                   <a href="#" class="agregar-carrito btn btn-outline-dark" data-id="${product.id}"><i class="agregar-carrito fas fa-shopping-cart"></i></a>
                 </div>
               </div>
@@ -118,14 +118,14 @@ function getProductsByCategory(selectedOption) {
         .map((product) => {
 
           return `
-          <div class="col-md-3 col-sm-6 animate__animated animate__backInDown animate__slow">
+          <div class="col-md-4 animate__animated animate__backInDown animate__slow">
             <div class="card mb-4 box-shadow">
               <img class="card-img-top img-fluid" src="${product.url_image}" alt="${product.name}" style="width:100%; height:30%;">
               <div class="card-body">
                 <h4  class="card-title"><b>${product.name}</b></h4>
                 <p  id="card-price" class="card-text">${product.price}</p>
                 <p>Descuento: ${product.discount} %</p>
-                <p class="text-info">Categoria: ${product.category.name}</p>
+                <p class="text-info">Categoria:${product.category.name}</p>
                 <a href="#" class="agregar-carrito btn btn-outline-dark" data-id="${product.id}"><i class="agregar-carrito fas fa-shopping-cart"></i></a>
               </div>
             </div>
@@ -193,7 +193,7 @@ function getProductsByPagination(pageNumber) {
         const html = data.attributes
           .map((product) => {
             return `
-              <div class="col-md-3 col-sm-6 animate__animated animate__backInDown animate__slow">
+              <div class="col-md-4 animate__animated animate__backInDown animate__slow">
               <div class="card mb-4 box-shadow">
                 <img class="card-img-top img-fluid" src="${product.url_image}" alt="${product.name}" style="width:100%; height:30%;">
                 <div class="card-body">

@@ -126,7 +126,7 @@ function getProductsByCategory(selectedOption) {
                 <p  id="card-price" class="card-text">${product.price}</p>
                 <p>Descuento: ${product.discount} %</p>
                 <p class="text-info">Categoria: ${product.category.name}</p>
-                <a href="#" class="agregar-carrito btn btn-info" data-id="${product.id}"><i class="fa fa-cart-plus"></i>&nbsp;  AGREGAR AL CARRITO</a>
+                <a href="#" class="agregar-carrito btn btn-outline-dark" data-id="${product.id}"><i class="agregar-carrito fas fa-shopping-cart"></i></a>
               </div>
             </div>
           </div>
